@@ -1,65 +1,279 @@
+"use client";
+
+import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
+import CipherText from "@/components/CipherText";
+import SectionReveal from "@/components/SectionReveal";
+import ProjectCard from "@/components/ProjectCard";
+import SkillsTicker from "@/components/SkillsTicker";
+import TerminalResume from "@/components/TerminalResume";
+import { projects } from "@/data/projects";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <>
+      {/* ── Hero ── */}
+      <section className="relative min-h-[100svh] flex flex-col items-center justify-center px-6 overflow-hidden">
+        {/* Floating gradient orbs */}
+        <motion.div
+          animate={{
+            x: [0, 30, -20, 0],
+            y: [0, -40, 20, 0],
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-accent/5 blur-[120px] pointer-events-none"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        <motion.div
+          animate={{
+            x: [0, -30, 20, 0],
+            y: [0, 30, -40, 0],
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-accent/3 blur-[100px] pointer-events-none"
+        />
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="relative z-10 text-center max-w-4xl"
+        >
+          {/* Pre-title */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="font-mono text-xs tracking-[0.5em] text-accent uppercase mb-6"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Software Engineer · AI Enthusiast
+          </motion.p>
+
+          {/* Name */}
+          <motion.h1
+            initial={{ opacity: 0, y: 40, rotateX: 15 }}
+            animate={{ opacity: 1, y: 0, rotateX: 0 }}
+            transition={{ delay: 0.4, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight leading-none"
+            style={{ perspective: 1000 }}
           >
-            Documentation
-          </a>
+            <CipherText text="ARUN TEJA V" delay={600} speed={25} />
+          </motion.h1>
+
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+            className="mt-6 text-base md:text-lg text-muted max-w-xl mx-auto leading-relaxed"
+          >
+            Building scalable backend systems and AI-driven applications at{" "}
+            <span className="text-foreground font-medium">Citi Group</span>.
+            Obsessed with agentic AI and LLM orchestration.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.1, duration: 0.6 }}
+            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <Link
+              href="/projects"
+              className="px-8 py-3.5 rounded-full bg-accent text-white text-sm font-medium tracking-wide hover:bg-accent-light transition-all hover:scale-105 active:scale-95"
+              data-hover
+            >
+              View Work
+            </Link>
+            <Link
+              href="/contact"
+              className="px-8 py-3.5 rounded-full border border-card-border text-sm font-medium tracking-wide text-foreground hover:border-accent/50 hover:text-accent transition-all hover:scale-105 active:scale-95"
+              data-hover
+            >
+              Contact
+            </Link>
+          </motion.div>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
+          className="absolute bottom-10 flex flex-col items-center gap-2"
+        >
+          <span className="text-[10px] font-mono text-muted tracking-widest uppercase">Scroll</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="w-5 h-8 rounded-full border border-card-border flex items-start justify-center p-1.5"
+          >
+            <div className="w-1 h-2 rounded-full bg-accent" />
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* ── About Snippet ── */}
+      <section className="py-24 md:py-32 px-6">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-12 gap-12 items-center">
+          <SectionReveal className="md:col-span-5" direction="left">
+            <div className="relative">
+              <motion.div
+                whileHover={{ rotateY: 5, rotateX: -3 }}
+                transition={{ type: "spring", stiffness: 100 }}
+                className="relative rounded-2xl overflow-hidden aspect-[3/4]"
+                style={{ perspective: 800, transformStyle: "preserve-3d" }}
+              >
+                <Image
+                  src="/images/photo2-suit.jpeg"
+                  alt="Arun Teja V"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 40vw"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+              </motion.div>
+              {/* Floating badge */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                className="absolute -bottom-4 -right-4 bg-card border border-card-border rounded-xl px-4 py-2 font-mono text-xs"
+              >
+                <span className="text-accent">2+</span> yrs experience
+              </motion.div>
+            </div>
+          </SectionReveal>
+
+          <SectionReveal className="md:col-span-7 space-y-6" delay={0.2}>
+            <p className="text-xs font-mono tracking-[0.4em] text-accent uppercase">01 — About</p>
+            <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+              Engineer at the
+              <br />
+              <span className="text-accent">edge of AI.</span>
+            </h2>
+            <p className="text-muted leading-relaxed">
+              I&apos;m a Software Developer at <span className="text-foreground font-medium">Citi Group</span> where
+              I ship low-latency microservices on AWS using Java and Spring Boot. My obsession is{" "}
+              <span className="text-foreground font-medium">agentic AI</span> — autonomous pipelines
+              built with RAG systems and LLM orchestration across GPT, Claude, and Gemini.
+            </p>
+            <div className="flex flex-wrap gap-6 text-sm font-mono text-muted">
+              <span className="flex items-center gap-2">
+                <span className="text-accent">📍</span> Charlotte, NC
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-accent">🎓</span> Ph.D. @ Belhaven
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-accent">✦</span> Open to roles
+              </span>
+            </div>
+            <Link
+              href="/about"
+              className="inline-flex items-center gap-2 text-sm text-accent font-mono hover:gap-3 transition-all"
+              data-hover
+            >
+              Read more
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </SectionReveal>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* ── Skills Ticker ── */}
+      <SkillsTicker />
+
+      {/* ── Featured Projects ── */}
+      <section className="py-24 md:py-32 px-6">
+        <div className="max-w-6xl mx-auto">
+          <SectionReveal>
+            <div className="flex items-end justify-between mb-12">
+              <div>
+                <p className="text-xs font-mono tracking-[0.4em] text-accent uppercase mb-3">02 — Work</p>
+                <h2 className="text-3xl md:text-5xl font-bold">Featured Projects</h2>
+              </div>
+              <Link
+                href="/projects"
+                className="hidden md:inline-flex items-center gap-2 text-sm text-muted font-mono hover:text-accent transition-colors"
+                data-hover
+              >
+                View all →
+              </Link>
+            </div>
+          </SectionReveal>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {projects.slice(0, 4).map((project, i) => (
+              <SectionReveal key={project.slug} delay={i * 0.1}>
+                <ProjectCard project={project} />
+              </SectionReveal>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center md:hidden">
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-2 text-sm text-accent font-mono"
+              data-hover
+            >
+              View all projects →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Terminal ── */}
+      <section className="py-24 md:py-32 px-6">
+        <div className="max-w-3xl mx-auto">
+          <SectionReveal>
+            <p className="text-xs font-mono tracking-[0.4em] text-accent uppercase mb-3">03 — Interactive</p>
+            <h2 className="text-3xl md:text-5xl font-bold mb-8">Terminal Resume</h2>
+            <p className="text-muted mb-8 max-w-xl">
+              Prefer the command line? Type <code className="text-accent bg-card px-2 py-0.5 rounded text-xs">help</code> to
+              explore my background interactively.
+            </p>
+          </SectionReveal>
+          <SectionReveal delay={0.2}>
+            <TerminalResume />
+          </SectionReveal>
+        </div>
+      </section>
+
+      {/* ── Contact CTA ── */}
+      <section className="py-24 md:py-32 px-6 border-t border-card-border">
+        <div className="max-w-4xl mx-auto text-center">
+          <SectionReveal>
+            <p className="text-xs font-mono tracking-[0.4em] text-accent uppercase mb-6">04 — Connect</p>
+            <h2 className="text-4xl md:text-6xl font-bold mb-6">
+              Let&apos;s work together.
+            </h2>
+            <p className="text-muted mb-10 max-w-md mx-auto">
+              Open to full-time roles, freelance projects, and interesting collaborations.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                href="/contact"
+                className="px-8 py-3.5 rounded-full bg-accent text-white text-sm font-medium tracking-wide hover:bg-accent-light transition-all hover:scale-105 active:scale-95"
+                data-hover
+              >
+                Get in Touch
+              </Link>
+              <Link
+                href="mailto:sunnyarunteja@gmail.com"
+                className="px-8 py-3.5 rounded-full border border-card-border text-sm font-medium tracking-wide hover:border-accent/50 hover:text-accent transition-all"
+                data-hover
+              >
+                sunnyarunteja@gmail.com
+              </Link>
+            </div>
+          </SectionReveal>
+        </div>
+      </section>
+    </>
   );
 }
