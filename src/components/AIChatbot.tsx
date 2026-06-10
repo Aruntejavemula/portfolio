@@ -30,9 +30,12 @@ export default function AIChatbot() {
     if (open) inputRef.current?.focus();
   }, [open]);
 
+  const userMessageCount = messages.filter((m) => m.role === "user").length;
+  const limitReached = userMessageCount >= 10;
+
   const send = async () => {
     const text = input.trim();
-    if (!text || loading) return;
+    if (!text || loading || limitReached) return;
 
     const userMsg: Message = { role: "user", content: text };
     const updated = [...messages, userMsg];
@@ -200,13 +203,13 @@ export default function AIChatbot() {
                 ref={inputRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about Arun..."
+                placeholder={limitReached ? "Message limit reached — refresh to start over" : "Ask about Arun..."}
                 className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted/50 outline-none"
-                disabled={loading}
+                disabled={loading || limitReached}
               />
               <button
                 type="submit"
-                disabled={loading || !input.trim()}
+                disabled={loading || !input.trim() || limitReached}
                 className="w-8 h-8 rounded-full bg-accent/20 text-accent flex items-center justify-center hover:bg-accent/30 transition-colors disabled:opacity-30"
                 data-hover
               >

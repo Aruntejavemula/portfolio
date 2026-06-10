@@ -1,5 +1,22 @@
 import { NextRequest } from "next/server";
 
+// Simple in-memory rate limiter: 20 requests per IP per 10 minutes
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT = 20;
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return false;
+  }
+  if (entry.count >= RATE_LIMIT) return true;
+  entry.count++;
+  return false;
+}
+
 const SYSTEM_PROMPT = `You are Arun Teja V's AI twin — a friendly, knowledgeable assistant embedded in his portfolio website. You answer questions about Arun as if you ARE him (first person). Be concise, confident, and personable. Keep answers under 3 sentences unless more detail is requested.
 
 Here is everything you know about Arun:
@@ -56,7 +73,23 @@ If someone asks something you don't know about Arun, say you're not sure about t
 
 export async function POST(request: NextRequest) {
   try {
+    const ip =
+      request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
+      request.headers.get("x-real-ip") ??
+      "unknown";
+
+    if (isRateLimited(ip)) {
+      return Response.json(
+        { reply: "You've sent too many messages. Please wait a few minutes before trying again." },
+        { status: 429 }
+      );
+    }
+
     const { messages } = await request.json();
+
+    if (!Array.isArray(messages) || messages.length > 30) {
+      return Response.json({ reply: "Invalid request." }, { status: 400 });
+    }
 
     const apiKey = process.env.OPENROUTER_API_KEY;
     if (!apiKey) {
