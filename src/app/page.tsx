@@ -33,52 +33,29 @@ export default function Home() {
           className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-accent/3 blur-[100px] pointer-events-none"
         />
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="relative z-10 text-center max-w-4xl"
-        >
+        <div className="relative z-10 text-center max-w-4xl">
           {/* Pre-title */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="font-mono text-xs tracking-[0.5em] text-accent uppercase mb-6"
-          >
+          <p className="hero-pre-title font-mono text-xs tracking-[0.5em] text-accent uppercase mb-6">
             Software Engineer · AI Enthusiast
-          </motion.p>
+          </p>
 
           {/* Name */}
-          <motion.h1
-            initial={{ opacity: 0, y: 40, rotateX: 15 }}
-            animate={{ opacity: 1, y: 0, rotateX: 0 }}
-            transition={{ delay: 0.4, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight leading-none"
+          <h1
+            className="hero-title text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight leading-none"
             style={{ perspective: 1000 }}
           >
             <CipherText text="ARUN TEJA V" delay={600} speed={25} />
-          </motion.h1>
+          </h1>
 
           {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-            className="mt-6 text-base md:text-lg text-muted max-w-xl mx-auto leading-relaxed"
-          >
+          <p className="hero-subtitle mt-6 text-base md:text-lg text-muted max-w-xl mx-auto leading-relaxed">
             Building scalable backend systems and AI-driven applications at{" "}
             <span className="text-foreground font-medium">Citi Group</span>.
             Obsessed with agentic AI and LLM orchestration.
-          </motion.p>
+          </p>
 
           {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1, duration: 0.6 }}
-            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
+          <div className="hero-ctas mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/projects"
               className="px-8 py-3.5 rounded-full bg-accent text-white text-sm font-medium tracking-wide hover:bg-accent-light transition-all hover:scale-105 active:scale-95"
@@ -93,16 +70,11 @@ export default function Home() {
             >
               Contact
             </Link>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="absolute bottom-10 flex flex-col items-center gap-2"
-        >
+        <div className="hero-scroll absolute bottom-10 flex flex-col items-center gap-2">
           <span className="text-[10px] font-mono text-muted tracking-widest uppercase">Scroll</span>
           <motion.div
             animate={{ y: [0, 8, 0] }}
@@ -111,7 +83,7 @@ export default function Home() {
           >
             <div className="w-1 h-2 rounded-full bg-accent" />
           </motion.div>
-        </motion.div>
+        </div>
       </section>
 
       {/* ── About Snippet ── */}

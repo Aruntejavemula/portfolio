@@ -14,6 +14,9 @@ export default function VelocityCursor() {
     if (typeof window === "undefined") return;
     if (window.matchMedia("(max-width: 768px)").matches) return;
 
+    // Hide OS cursor only after this JS component is mounted
+    document.documentElement.classList.add("cursor-hidden");
+
     const onMove = (e: MouseEvent) => {
       mouse.current = { x: e.clientX, y: e.clientY };
       if (!visible) setVisible(true);
@@ -60,6 +63,7 @@ export default function VelocityCursor() {
     raf = requestAnimationFrame(animate);
 
     return () => {
+      document.documentElement.classList.remove("cursor-hidden");
       document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseover", onOver);
       document.removeEventListener("mouseout", onOut);
