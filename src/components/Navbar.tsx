@@ -25,7 +25,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-5">
           {links.map((l) => (
             <MagneticElement key={l.href} strength={0.4} radius={80} lift={true} scaleAmount={1.35}>
               <Link
