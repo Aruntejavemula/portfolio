@@ -108,7 +108,8 @@ export async function POST(request: NextRequest) {
         "X-Title": "Arun Teja Portfolio",
       },
       body: JSON.stringify({
-        model: "openrouter/auto",
+        // Free models only — no paid fallback
+        model: "google/gemini-2.0-flash-exp:free",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           ...messages.map((m: { role: string; content: string }) => ({
@@ -118,7 +119,6 @@ export async function POST(request: NextRequest) {
         ],
         max_tokens: 300,
         temperature: 0.7,
-        route: "fallback",
       }),
     });
 
