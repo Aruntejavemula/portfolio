@@ -134,6 +134,19 @@ export const experience = [
       "Leveraged AI-assisted development tools (GitHub Copilot, Claude) to accelerate feature development",
     ],
   },
+  {
+    role: "Software Developer",
+    company: "HSBC",
+    period: "May 2021 – Aug 2022",
+    location: "Hyderabad, India",
+    bullets: [
+      "Contributed to development of HSBC's core banking application serving millions of customers across retail and corporate banking",
+      "Built and maintained backend services using Java and Spring Boot, handling high-volume transaction processing and account management workflows",
+      "Integrated AWS services (S3, Lambda, EC2) to support scalable data storage and event-driven processing pipelines",
+      "Collaborated with cross-functional teams to deliver feature enhancements and resolve production issues within Agile sprint cycles",
+      "Wrote unit and integration tests using JUnit to ensure reliability of critical banking modules",
+    ],
+  },
 ];
 
 export const education = [

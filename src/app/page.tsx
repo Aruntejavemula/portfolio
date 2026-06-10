@@ -119,7 +119,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="absolute -bottom-4 -right-4 bg-card border border-card-border rounded-xl px-4 py-2 font-mono text-xs"
               >
-                <span className="text-accent">2+</span> yrs experience
+                <span className="text-accent">3+</span> yrs experience
               </motion.div>
             </div>
           </SectionReveal>

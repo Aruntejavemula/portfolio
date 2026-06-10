@@ -15,7 +15,7 @@ const commands: Record<string, string> = {
   clear       — Clear terminal`,
 
   about: `Arun Teja V
-Software Engineer with 2+ years of experience in backend
+Software Engineer with 3+ years of experience in backend
 development and AI-driven systems. Currently at Citi Group,
 building scalable microservices on AWS.
 

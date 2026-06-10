@@ -79,7 +79,7 @@ export default function AboutPage() {
             <div className="space-y-4 text-muted leading-relaxed">
               <p>
                 I&apos;m <span className="text-foreground font-medium">Arun Teja V</span> — a Software
-                Engineer with 2+ years of production experience at{" "}
+                Engineer with 3+ years of production experience at{" "}
                 <span className="text-foreground font-medium">Citi Group</span>, where I build
                 scalable backend services using Java, Spring Boot, and microservices architecture on AWS.
               </p>
