@@ -99,33 +99,25 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-        "HTTP-Referer": "https://aruntejav.vercel.app",
-        "X-Title": "Arun Teja Portfolio",
-      },
-      body: JSON.stringify({
-        model: "meta-llama/llama-3.1-8b-instruct:free",
-        messages: [
-          { role: "system", content: SYSTEM_PROMPT },
-          ...messages.map((m: { role: string; content: string }) => ({
-            role: m.role,
-            content: m.content,
-          })),
-        ],
-        max_tokens: 300,
-        temperature: 0.7,
-      }),
-    });
+    const FREE_MODELS = [
+      "meta-llama/llama-3.1-8b-instruct:free",
+      "mistralai/mistral-7b-instruct:free",
+      "qwen/qwen-2-7b-instruct:free",
+      "google/gemma-2-9b-it:free",
+      "huggingfaceh4/zephyr-7b-beta:free",
+      "openchat/openchat-7b:free",
+    ];
 
-    if (!response.ok) {
-      const err = await response.text();
-      console.error("OpenRouter error:", response.status, err);
-      // Try fallback free model
-      const fallback = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    const chatMessages = [
+      { role: "system", content: SYSTEM_PROMPT },
+      ...messages.map((m: { role: string; content: string }) => ({
+        role: m.role,
+        content: m.content,
+      })),
+    ];
+
+    for (const model of FREE_MODELS) {
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -133,35 +125,23 @@ export async function POST(request: NextRequest) {
           "HTTP-Referer": "https://aruntejav.vercel.app",
           "X-Title": "Arun Teja Portfolio",
         },
-        body: JSON.stringify({
-          model: "mistralai/mistral-7b-instruct:free",
-          messages: [
-            { role: "system", content: SYSTEM_PROMPT },
-            ...messages.map((m: { role: string; content: string }) => ({
-              role: m.role,
-              content: m.content,
-            })),
-          ],
-          max_tokens: 300,
-          temperature: 0.7,
-        }),
+        body: JSON.stringify({ model, messages: chatMessages, max_tokens: 300, temperature: 0.7 }),
       });
-      if (!fallback.ok) {
-        const err2 = await fallback.text();
-        console.error("Fallback error:", fallback.status, err2);
-        return Response.json(
-          { reply: "I'm having a brief moment — try asking again!" },
-          { status: 200 }
-        );
+
+      if (response.ok) {
+        const data = await response.json();
+        const reply = data.choices?.[0]?.message?.content || "I couldn't process that. Try rephrasing?";
+        return Response.json({ reply });
       }
-      const fallbackData = await fallback.json();
-      return Response.json({ reply: fallbackData.choices?.[0]?.message?.content || "I couldn't process that. Try rephrasing?" });
+
+      const err = await response.text();
+      console.error(`Model ${model} failed (${response.status}):`, err);
     }
 
-    const data = await response.json();
-    const reply = data.choices?.[0]?.message?.content || "I couldn't process that. Try rephrasing?";
-
-    return Response.json({ reply });
+    return Response.json(
+      { reply: "I'm having a brief moment — try asking again!" },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Chat API error:", error);
     return Response.json(
