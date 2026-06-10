@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import VelocityCursor from "@/components/VelocityCursor";
 import AIChatbot from "@/components/AIChatbot";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -49,6 +50,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground overflow-x-hidden">
+        <ScrollToTop />
         <VelocityCursor />
         <Navbar />
         <main className="flex-1 pt-16">{children}</main>
