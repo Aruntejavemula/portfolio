@@ -99,50 +99,40 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const FREE_MODELS = [
-      "deepseek/deepseek-chat-v3-0324:free",
-      "deepseek/deepseek-r1:free",
-      "meta-llama/llama-3.1-8b-instruct:free",
-      "mistralai/mistral-7b-instruct:free",
-      "qwen/qwen-2-7b-instruct:free",
-    ];
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+        "HTTP-Referer": "https://aruntejav.vercel.app",
+        "X-Title": "Arun Teja Portfolio",
+      },
+      body: JSON.stringify({
+        model: "deepseek/deepseek-v4-flash",
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          ...messages.map((m: { role: string; content: string }) => ({
+            role: m.role,
+            content: m.content,
+          })),
+        ],
+        max_tokens: 300,
+        temperature: 0.7,
+      }),
+    });
 
-    const chatMessages = [
-      { role: "system", content: SYSTEM_PROMPT },
-      ...messages.map((m: { role: string; content: string }) => ({
-        role: m.role,
-        content: m.content,
-      })),
-    ];
-
-    let lastError = "";
-    for (const model of FREE_MODELS) {
-      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
-          "HTTP-Referer": "https://aruntejav.vercel.app",
-          "X-Title": "Arun Teja Portfolio",
-        },
-        body: JSON.stringify({ model, messages: chatMessages, max_tokens: 300, temperature: 0.7 }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const reply = data.choices?.[0]?.message?.content || "I couldn't process that. Try rephrasing?";
-        return Response.json({ reply });
-      }
-
+    if (!response.ok) {
       const err = await response.text();
-      console.error(`Model ${model} failed (${response.status}):`, err);
-      lastError = `${model} → ${response.status}: ${err}`;
+      console.error("OpenRouter error:", response.status, err);
+      return Response.json(
+        { reply: "I'm having a brief moment — try asking again!" },
+        { status: 200 }
+      );
     }
 
-    return Response.json(
-      { reply: "I'm having a brief moment — try asking again!" },
-      { status: 200 }
-    );
+    const data = await response.json();
+    const reply = data.choices?.[0]?.message?.content || "I couldn't process that. Try rephrasing?";
+    return Response.json({ reply });
   } catch (error) {
     console.error("Chat API error:", error);
     return Response.json(
