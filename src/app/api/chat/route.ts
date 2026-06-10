@@ -108,8 +108,13 @@ export async function POST(request: NextRequest) {
         "X-Title": "Arun Teja Portfolio",
       },
       body: JSON.stringify({
-        // Free models only — no paid fallback
-        model: "google/gemini-2.0-flash-exp:free",
+        // Free models only — tried in order, no paid fallback
+        models: [
+          "meta-llama/llama-3.1-8b-instruct:free",
+          "mistralai/mistral-7b-instruct:free",
+          "qwen/qwen-2-7b-instruct:free",
+        ],
+        route: "fallback",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           ...messages.map((m: { role: string; content: string }) => ({
