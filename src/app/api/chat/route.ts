@@ -123,11 +123,39 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       const err = await response.text();
-      console.error("OpenRouter error:", err);
-      return Response.json(
-        { reply: "I'm having a brief moment — try asking again!" },
-        { status: 200 }
-      );
+      console.error("OpenRouter error:", response.status, err);
+      // Try fallback free model
+      const fallback = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+          "HTTP-Referer": "https://aruntejav.vercel.app",
+          "X-Title": "Arun Teja Portfolio",
+        },
+        body: JSON.stringify({
+          model: "mistralai/mistral-7b-instruct:free",
+          messages: [
+            { role: "system", content: SYSTEM_PROMPT },
+            ...messages.map((m: { role: string; content: string }) => ({
+              role: m.role,
+              content: m.content,
+            })),
+          ],
+          max_tokens: 300,
+          temperature: 0.7,
+        }),
+      });
+      if (!fallback.ok) {
+        const err2 = await fallback.text();
+        console.error("Fallback error:", fallback.status, err2);
+        return Response.json(
+          { reply: "I'm having a brief moment — try asking again!" },
+          { status: 200 }
+        );
+      }
+      const fallbackData = await fallback.json();
+      return Response.json({ reply: fallbackData.choices?.[0]?.message?.content || "I couldn't process that. Try rephrasing?" });
     }
 
     const data = await response.json();
