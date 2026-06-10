@@ -100,12 +100,11 @@ export async function POST(request: NextRequest) {
     }
 
     const FREE_MODELS = [
+      "deepseek/deepseek-chat-v3-0324:free",
+      "deepseek/deepseek-r1:free",
       "meta-llama/llama-3.1-8b-instruct:free",
       "mistralai/mistral-7b-instruct:free",
       "qwen/qwen-2-7b-instruct:free",
-      "google/gemma-2-9b-it:free",
-      "huggingfaceh4/zephyr-7b-beta:free",
-      "openchat/openchat-7b:free",
     ];
 
     const chatMessages = [
@@ -141,7 +140,7 @@ export async function POST(request: NextRequest) {
     }
 
     return Response.json(
-      { reply: `DEBUG: All models failed. Last error: ${lastError}` },
+      { reply: "I'm having a brief moment — try asking again!" },
       { status: 200 }
     );
   } catch (error) {
