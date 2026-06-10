@@ -57,7 +57,7 @@ export default function Home() {
 
           {/* CTAs */}
           <div className="hero-ctas mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <MagneticElement strength={0.4} radius={100}>
+            <MagneticElement strength={0.4} radius={100} scaleAmount={1.15}>
               <Link
                 href="/projects"
                 className="px-8 py-3.5 rounded-full bg-accent text-white text-sm font-medium tracking-wide hover:bg-accent-light transition-all active:scale-95"
@@ -66,7 +66,7 @@ export default function Home() {
                 View Work
               </Link>
             </MagneticElement>
-            <MagneticElement strength={0.4} radius={100}>
+            <MagneticElement strength={0.4} radius={100} scaleAmount={1.15}>
               <Link
                 href="/contact"
                 className="px-8 py-3.5 rounded-full border border-card-border text-sm font-medium tracking-wide text-foreground hover:border-accent/50 hover:text-accent transition-all active:scale-95"

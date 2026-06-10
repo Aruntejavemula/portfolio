@@ -6,9 +6,10 @@ import { motion, useSpring } from "framer-motion";
 interface Props {
   children: ReactNode;
   className?: string;
-  strength?: number;   // how much the element drifts toward cursor (0-1)
-  radius?: number;     // pixel radius of magnetic field
-  lift?: boolean;      // whether to 3D-lift on hover
+  strength?: number;     // how much the element drifts toward cursor (0-1)
+  radius?: number;       // pixel radius of magnetic field
+  lift?: boolean;        // whether to 3D-lift on hover
+  scaleAmount?: number;  // how much to scale on hover (e.g. 1.25 = 25% bigger)
 }
 
 export default function MagneticElement({
@@ -17,11 +18,12 @@ export default function MagneticElement({
   strength = 0.35,
   radius = 120,
   lift = true,
+  scaleAmount = 1.25,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState(false);
 
-  const springConfig = { damping: 15, stiffness: 200, mass: 0.5 };
+  const springConfig = { damping: 12, stiffness: 180, mass: 0.4 };
   const x = useSpring(0, springConfig);
   const y = useSpring(0, springConfig);
   const scale = useSpring(1, springConfig);
@@ -43,11 +45,11 @@ export default function MagneticElement({
       y.set(dy * strength * falloff);
 
       if (lift) {
-        // Tilt based on cursor position relative to center
-        rotateX.set(-(dy / rect.height) * 12);
-        rotateY.set((dx / rect.width) * 12);
-        scale.set(1 + 0.08 * falloff);
+        rotateX.set(-(dy / rect.height) * 15);
+        rotateY.set((dx / rect.width) * 15);
       }
+      // Scale grows as cursor gets closer to center
+      scale.set(1 + (scaleAmount - 1) * falloff);
     }
   };
 
@@ -83,10 +85,10 @@ export default function MagneticElement({
       data-hover
     >
       <div
-        className="transition-shadow duration-300"
+        className="transition-all duration-300"
         style={{
           boxShadow: hovered
-            ? "0 8px 30px rgba(204, 88, 1, 0.15), 0 4px 12px rgba(0,0,0,0.3)"
+            ? "0 8px 30px rgba(204, 88, 1, 0.2), 0 4px 16px rgba(0,0,0,0.4)"
             : "none",
           borderRadius: "inherit",
         }}

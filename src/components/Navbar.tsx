@@ -25,10 +25,10 @@ export default function Navbar() {
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
           {links.map((l) => (
-            <MagneticElement key={l.href} strength={0.3} radius={80} lift={true}>
+            <MagneticElement key={l.href} strength={0.4} radius={80} lift={true} scaleAmount={1.35}>
               <Link
                 href={l.href}
-                className="text-sm text-muted hover:text-foreground transition-colors duration-300 font-mono tracking-wide block py-1 px-2"
+                className="text-sm text-muted hover:text-accent hover:font-semibold transition-all duration-300 font-mono tracking-wide block py-1 px-2"
               >
                 {l.label}
               </Link>
