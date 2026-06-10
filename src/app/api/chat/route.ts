@@ -37,12 +37,13 @@ CERTIFICATIONS:
 - AWS Cloud Practitioner (in progress)
 
 KEY PROJECTS:
-1. Chatbot Mio — Cross-platform AI chatbot with Flutter frontend, FastAPI backend, Supabase auth
-2. Credit Card Fraud Detection — ML pipeline with ROC-AUC 0.98 using XGBoost, Random Forest
-3. Distracted Driver Detection — CNN & VGG16 transfer learning (Udacity capstone)
-4. App-Idea Research Agent — Autonomous AI pipeline using N8n, multi-LLM workflows, RAG
-5. OmniMind BYOK — Bring-your-own-key AI chat client (Flutter)
-6. AI Knowledge API — FastAPI RAG microservice with GPT integration, deployed on AWS
+1. Remio — Desktop PWA & Android app, AI-powered launcher and productivity suite (remiolauncher.com)
+2. Chatbot Mio — Cross-platform AI chatbot with Flutter frontend, FastAPI backend, Supabase auth
+3. Credit Card Fraud Detection — ML pipeline with ROC-AUC 0.98 using XGBoost, Random Forest
+4. Distracted Driver Detection — CNN & VGG16 transfer learning (Udacity capstone)
+5. App-Idea Research Agent — Autonomous AI pipeline using N8n, multi-LLM workflows, RAG
+6. OmniMind BYOK — Bring-your-own-key AI chat client (Flutter)
+7. AI Knowledge API — FastAPI RAG microservice with GPT integration, deployed on AWS
 
 PERSONAL:
 - Location: Charlotte, North Carolina

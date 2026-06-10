@@ -12,6 +12,22 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "remio",
+    title: "Remio",
+    description:
+      "Desktop PWA & Android application — a full-featured AI-powered launcher and productivity suite.",
+    longDescription:
+      "Remio is a cross-platform launcher and productivity app available as a desktop PWA and native Android application. It brings AI-powered workflows, smart search, and a streamlined interface for daily productivity tasks.",
+    tech: ["Flutter", "Dart", "PWA", "Android", "AI", "Supabase"],
+    highlights: [
+      "Desktop PWA — install directly from the browser",
+      "Native Android app for mobile access",
+      "AI-powered workflows and smart search",
+      "Cross-platform productivity suite",
+    ],
+    live: "https://remiolauncher.com",
+  },
+  {
     slug: "chatbot-mio",
     title: "Chatbot Mio",
     description:

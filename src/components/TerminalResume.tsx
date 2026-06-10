@@ -52,11 +52,12 @@ Testing       JUnit, Mockito, Unit/Integration/API Testing`,
 
   projects: `Featured Projects:
 ━━━━━━━━━━━━━━━━━
-1. Chatbot Mio         Flutter + FastAPI + Supabase
-2. Fraud Detection     ML pipeline, ROC-AUC 0.98
-3. Driver Detection    CNN + VGG16 transfer learning
-4. Research Agent      Agentic AI + RAG + multi-LLM
-5. OmniMind BYOK       Multi-provider AI chat client
+1. Remio               Desktop PWA & Android launcher → remiolauncher.com
+2. Chatbot Mio         Flutter + FastAPI + Supabase
+3. Fraud Detection     ML pipeline, ROC-AUC 0.98
+4. Driver Detection    CNN + VGG16 transfer learning
+5. Research Agent      Agentic AI + RAG + multi-LLM
+6. OmniMind BYOK       Multi-provider AI chat client
 
 → Visit /projects for details`,
 
@@ -84,11 +85,13 @@ export default function TerminalResume() {
     { type: "output", content: 'Welcome to Arun\'s Terminal. Type "help" for commands.' },
   ]);
   const [input, setInput] = useState("");
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
   }, [lines]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -131,7 +134,7 @@ export default function TerminalResume() {
       </div>
 
       {/* Terminal body */}
-      <div className="h-72 md:h-80 overflow-y-auto p-4 space-y-1">
+      <div ref={containerRef} className="h-72 md:h-80 overflow-y-auto p-4 space-y-1">
         {lines.map((line, i) => (
           <div key={i}>
             {line.type === "input" ? (
@@ -161,7 +164,6 @@ export default function TerminalResume() {
           />
           <span className="animate-blink text-accent">▊</span>
         </form>
-        <div ref={bottomRef} />
       </div>
     </motion.div>
   );

@@ -14,10 +14,18 @@ export default function ContactPage() {
     setStatus("sending");
 
     try {
-      const res = await fetch("https://formspree.io/f/xwpbqjbk", {
+      const res = await fetch("https://formsubmit.co/ajax/sunnyarunteja@gmail.com", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message,
+          _subject: `Portfolio message from ${form.name}`,
+        }),
       });
 
       if (res.ok) {
@@ -87,14 +95,14 @@ export default function ContactPage() {
           {/* Photo */}
           <motion.div
             whileHover={{ rotateY: 5, scale: 1.02 }}
-            className="relative rounded-2xl overflow-hidden aspect-video max-w-sm"
+            className="relative rounded-2xl overflow-hidden aspect-[3/4] max-w-xs"
             style={{ perspective: 800 }}
           >
             <Image
               src="/images/photo5-chaplin.jpeg"
               alt="Arun having fun"
               fill
-              className="object-cover"
+              className="object-cover object-top"
               sizes="(max-width: 768px) 100vw, 30vw"
             />
           </motion.div>
