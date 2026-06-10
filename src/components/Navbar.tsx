@@ -5,12 +5,13 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import MagneticElement from "@/components/MagneticElement";
 
-const links = [
+const links: { href: string; label: string; external?: boolean }[] = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/experience", label: "Experience" },
   { href: "/projects", label: "Projects" },
   { href: "/contact", label: "Contact" },
+  { href: "https://www.remiolauncher.com/", label: "My Creation", external: true },
 ];
 
 export default function Navbar() {
@@ -29,7 +30,13 @@ export default function Navbar() {
             <MagneticElement key={l.href} strength={0.4} radius={80} lift={true} scaleAmount={1.35}>
               <Link
                 href={l.href}
-                className="text-sm text-muted hover:text-accent hover:font-semibold transition-all duration-300 font-mono tracking-wide block py-1 px-2"
+                target={l.external ? "_blank" : undefined}
+                rel={l.external ? "noopener noreferrer" : undefined}
+                className={`text-sm hover:font-semibold transition-all duration-300 font-mono tracking-wide block py-1 px-2 ${
+                  l.external
+                    ? "text-accent border border-accent/40 rounded-full px-3 hover:bg-accent/10"
+                    : "text-muted hover:text-accent"
+                }`}
               >
                 {l.label}
               </Link>
@@ -72,8 +79,12 @@ export default function Navbar() {
                 <Link
                   key={l.href}
                   href={l.href}
+                  target={l.external ? "_blank" : undefined}
+                  rel={l.external ? "noopener noreferrer" : undefined}
                   onClick={() => setOpen(false)}
-                  className="text-lg font-mono tracking-wide text-muted hover:text-foreground transition-colors"
+                  className={`text-lg font-mono tracking-wide transition-colors ${
+                    l.external ? "text-accent" : "text-muted hover:text-foreground"
+                  }`}
                 >
                   {l.label}
                 </Link>
