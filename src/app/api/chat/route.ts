@@ -116,6 +116,7 @@ export async function POST(request: NextRequest) {
       })),
     ];
 
+    let lastError = "";
     for (const model of FREE_MODELS) {
       const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
@@ -136,10 +137,11 @@ export async function POST(request: NextRequest) {
 
       const err = await response.text();
       console.error(`Model ${model} failed (${response.status}):`, err);
+      lastError = `${model} → ${response.status}: ${err}`;
     }
 
     return Response.json(
-      { reply: "I'm having a brief moment — try asking again!" },
+      { reply: `DEBUG: All models failed. Last error: ${lastError}` },
       { status: 200 }
     );
   } catch (error) {
