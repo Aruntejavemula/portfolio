@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import SectionReveal from "@/components/SectionReveal";
+import MagneticElement from "@/components/MagneticElement";
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -151,18 +152,20 @@ export default function ContactPage() {
               />
             </div>
 
-            <button
-              type="submit"
-              disabled={status === "sending"}
-              className="w-full py-3.5 rounded-xl bg-accent text-white text-sm font-medium tracking-wide hover:bg-accent-light transition-all disabled:opacity-50"
-              data-hover
-            >
-              {status === "sending"
-                ? "Sending..."
-                : status === "sent"
-                ? "Message Sent!"
-                : "Send Message"}
-            </button>
+            <MagneticElement strength={0.25} radius={120}>
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="w-full py-3.5 rounded-xl bg-accent text-white text-sm font-medium tracking-wide hover:bg-accent-light transition-all disabled:opacity-50"
+                data-hover
+              >
+                {status === "sending"
+                  ? "Sending..."
+                  : status === "sent"
+                  ? "Message Sent!"
+                  : "Send Message"}
+              </button>
+            </MagneticElement>
 
             {status === "error" && (
               <p className="text-sm text-red-400 text-center">

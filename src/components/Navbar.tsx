@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import MagneticElement from "@/components/MagneticElement";
 
 const links = [
   { href: "/", label: "Home" },
@@ -24,13 +25,14 @@ export default function Navbar() {
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
           {links.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className="text-sm text-muted hover:text-foreground transition-colors duration-300 font-mono tracking-wide"
-            >
-              {l.label}
-            </Link>
+            <MagneticElement key={l.href} strength={0.3} radius={80} lift={true}>
+              <Link
+                href={l.href}
+                className="text-sm text-muted hover:text-foreground transition-colors duration-300 font-mono tracking-wide block py-1 px-2"
+              >
+                {l.label}
+              </Link>
+            </MagneticElement>
           ))}
         </div>
 

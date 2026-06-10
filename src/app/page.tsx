@@ -8,6 +8,7 @@ import SectionReveal from "@/components/SectionReveal";
 import ProjectCard from "@/components/ProjectCard";
 import SkillsTicker from "@/components/SkillsTicker";
 import TerminalResume from "@/components/TerminalResume";
+import MagneticElement from "@/components/MagneticElement";
 import { projects } from "@/data/projects";
 
 export default function Home() {
@@ -56,20 +57,24 @@ export default function Home() {
 
           {/* CTAs */}
           <div className="hero-ctas mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/projects"
-              className="px-8 py-3.5 rounded-full bg-accent text-white text-sm font-medium tracking-wide hover:bg-accent-light transition-all hover:scale-105 active:scale-95"
-              data-hover
-            >
-              View Work
-            </Link>
-            <Link
-              href="/contact"
-              className="px-8 py-3.5 rounded-full border border-card-border text-sm font-medium tracking-wide text-foreground hover:border-accent/50 hover:text-accent transition-all hover:scale-105 active:scale-95"
-              data-hover
-            >
-              Contact
-            </Link>
+            <MagneticElement strength={0.4} radius={100}>
+              <Link
+                href="/projects"
+                className="px-8 py-3.5 rounded-full bg-accent text-white text-sm font-medium tracking-wide hover:bg-accent-light transition-all active:scale-95"
+                data-hover
+              >
+                View Work
+              </Link>
+            </MagneticElement>
+            <MagneticElement strength={0.4} radius={100}>
+              <Link
+                href="/contact"
+                className="px-8 py-3.5 rounded-full border border-card-border text-sm font-medium tracking-wide text-foreground hover:border-accent/50 hover:text-accent transition-all active:scale-95"
+                data-hover
+              >
+                Contact
+              </Link>
+            </MagneticElement>
           </div>
         </div>
 
@@ -228,20 +233,24 @@ export default function Home() {
               Open to full-time roles, freelance projects, and interesting collaborations.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                href="/contact"
-                className="px-8 py-3.5 rounded-full bg-accent text-white text-sm font-medium tracking-wide hover:bg-accent-light transition-all hover:scale-105 active:scale-95"
-                data-hover
-              >
-                Get in Touch
-              </Link>
-              <Link
-                href="mailto:sunnyarunteja@gmail.com"
-                className="px-8 py-3.5 rounded-full border border-card-border text-sm font-medium tracking-wide hover:border-accent/50 hover:text-accent transition-all"
-                data-hover
-              >
-                sunnyarunteja@gmail.com
-              </Link>
+              <MagneticElement strength={0.4} radius={100}>
+                <Link
+                  href="/contact"
+                  className="px-8 py-3.5 rounded-full bg-accent text-white text-sm font-medium tracking-wide hover:bg-accent-light transition-all active:scale-95"
+                  data-hover
+                >
+                  Get in Touch
+                </Link>
+              </MagneticElement>
+              <MagneticElement strength={0.4} radius={100}>
+                <Link
+                  href="mailto:sunnyarunteja@gmail.com"
+                  className="px-8 py-3.5 rounded-full border border-card-border text-sm font-medium tracking-wide hover:border-accent/50 hover:text-accent transition-all"
+                  data-hover
+                >
+                  sunnyarunteja@gmail.com
+                </Link>
+              </MagneticElement>
             </div>
           </SectionReveal>
         </div>
