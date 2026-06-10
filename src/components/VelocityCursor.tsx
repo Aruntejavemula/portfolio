@@ -5,15 +5,18 @@ import { useEffect, useRef, useState } from "react";
 export default function VelocityCursor() {
   const dot = useRef<HTMLDivElement>(null);
   const ring = useRef<HTMLDivElement>(null);
-  const glow = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const [hovering, setHovering] = useState(false);
+  const [isMobile, setIsMobile] = useState(true); // default true = render nothing on SSR
   const mouse = useRef({ x: 0, y: 0 });
   const ringPos = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.matchMedia("(max-width: 768px)").matches) return;
+    setIsMobile(window.matchMedia("(max-width: 768px)").matches);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
 
     // Hide OS cursor only after this JS component is mounted
     document.documentElement.classList.add("cursor-hidden");
@@ -73,11 +76,9 @@ export default function VelocityCursor() {
       document.removeEventListener("mouseenter", onEnter);
       cancelAnimationFrame(raf);
     };
-  }, [visible, hovering]);
+  }, [visible, hovering, isMobile]);
 
-  if (typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches) {
-    return null;
-  }
+  if (isMobile) return null;
 
   return (
     <>
