@@ -54,17 +54,11 @@ export default function VelocityCursor() {
       ringPos.current.x += (mouse.current.x - ringPos.current.x) * 0.15;
       ringPos.current.y += (mouse.current.y - ringPos.current.y) * 0.15;
       if (ring.current) {
-        const size = hovering ? 56 : 32;
-        ring.current.style.transform = `translate(${ringPos.current.x - size / 2}px, ${ringPos.current.y - size / 2}px) scale3d(${hovering ? 1.3 : 1}, ${hovering ? 1.3 : 1}, 1)`;
+        const size = hovering ? 0 : 32;
+        ring.current.style.transform = `translate(${ringPos.current.x - size / 2}px, ${ringPos.current.y - size / 2}px)`;
         ring.current.style.width = `${size}px`;
         ring.current.style.height = `${size}px`;
-      }
-      if (glow.current) {
-        const glowSize = hovering ? 80 : 0;
-        glow.current.style.transform = `translate(${ringPos.current.x - glowSize / 2}px, ${ringPos.current.y - glowSize / 2}px)`;
-        glow.current.style.width = `${glowSize}px`;
-        glow.current.style.height = `${glowSize}px`;
-        glow.current.style.opacity = hovering ? "0.15" : "0";
+        ring.current.style.opacity = hovering ? "0" : (visible ? "1" : "0");
       }
       raf = requestAnimationFrame(animate);
     };
@@ -87,38 +81,26 @@ export default function VelocityCursor() {
 
   return (
     <>
+      {/* Small dot — always visible, shrinks on hover */}
       <div
         ref={dot}
         className="fixed top-0 left-0 z-[10000] pointer-events-none rounded-full bg-accent"
         style={{
-          width: 8,
-          height: 8,
-          opacity: visible ? 1 : 0,
-          transition: "opacity 0.3s",
+          width: hovering ? 6 : 8,
+          height: hovering ? 6 : 8,
+          opacity: visible ? (hovering ? 0.6 : 1) : 0,
+          transition: "opacity 0.3s, width 0.2s, height 0.2s",
         }}
       />
+      {/* Ring — visible when NOT hovering, fades out on hover so button text is clear */}
       <div
         ref={ring}
-        className="fixed top-0 left-0 z-[10000] pointer-events-none rounded-full border-2 border-accent/60"
+        className="fixed top-0 left-0 z-[10000] pointer-events-none rounded-full border border-accent/50"
         style={{
           width: 32,
           height: 32,
-          opacity: visible ? 1 : 0,
-          transition: "opacity 0.3s, width 0.35s cubic-bezier(0.34,1.56,0.64,1), height 0.35s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s, transform 0.35s cubic-bezier(0.34,1.56,0.64,1)",
-          background: hovering ? "rgba(204, 88, 1, 0.08)" : "transparent",
-          backdropFilter: hovering ? "blur(4px)" : "none",
-          borderColor: hovering ? "rgba(204, 88, 1, 0.8)" : "rgba(204, 88, 1, 0.5)",
-        }}
-      />
-      {/* Glow orb on hover */}
-      <div
-        ref={glow}
-        className="fixed top-0 left-0 z-[9999] pointer-events-none rounded-full bg-accent blur-xl"
-        style={{
-          width: 0,
-          height: 0,
-          opacity: 0,
-          transition: "opacity 0.4s ease, width 0.4s ease, height 0.4s ease",
+          opacity: visible && !hovering ? 1 : 0,
+          transition: "opacity 0.25s ease, width 0.3s ease, height 0.3s ease",
         }}
       />
     </>

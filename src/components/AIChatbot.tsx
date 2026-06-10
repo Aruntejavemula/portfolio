@@ -41,7 +41,8 @@ export default function AIChatbot() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/chat", {
+      const base = `${window.location.protocol}//${window.location.host}`;
+      const res = await fetch(`${base}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: updated }),
